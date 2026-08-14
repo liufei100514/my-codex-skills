@@ -1,0 +1,4 @@
+interface:
+  display_name: "A股每日复盘"
+  short_description: "盘后复盘、题材强度、风险信号和次日计划"
+  default_prompt: "Use $a-share-daily-review to produce a concise A-share market review and next-session plan."
