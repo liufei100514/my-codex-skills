@@ -1,0 +1,6 @@
+interface:
+  display_name: "硅橡胶工艺异常诊断"
+  short_description: "诊断硅橡胶成型硫化模具材料相关生产异常"
+  default_prompt: "Use $silicone-rubber-process-diagnosis to diagnose this silicone rubber defect and propose checks."
+policy:
+  allow_implicit_invocation: true
