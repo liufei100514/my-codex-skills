@@ -1,0 +1,6 @@
+interface:
+  display_name: "生产日报分析"
+  short_description: "把产量良率停机报废转成日报复盘和次日重点"
+  default_prompt: "Use $production-daily-analysis to analyze today's production report and produce actions."
+policy:
+  allow_implicit_invocation: true
