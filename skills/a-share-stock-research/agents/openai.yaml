@@ -1,0 +1,4 @@
+interface:
+  display_name: "A股个股研究"
+  short_description: "围绕A股个股建立基本面、公告、估值和交易风险分析"
+  default_prompt: "Use $a-share-stock-research to analyze an A-share stock with thesis, valuation, catalysts, and risks."
