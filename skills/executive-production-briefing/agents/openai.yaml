@@ -1,0 +1,6 @@
+interface:
+  display_name: "老板总经理汇报"
+  short_description: "把生产现场问题整理成管理层可决策汇报"
+  default_prompt: "Use $executive-production-briefing to turn these production facts into an executive briefing."
+policy:
+  allow_implicit_invocation: true
