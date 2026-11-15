@@ -1,0 +1,3 @@
+﻿interface:
+  display_name: "Kingdee K3Cloud Read-only"
+  short_description: "Read-only access to Kingdee K3Cloud ERP: materials, purchase prices, inventory"
