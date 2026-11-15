@@ -68,15 +68,28 @@ $work = "$env:TEMP\my-codex-skills"
 if (-not (Test-Path $work)) { & $git clone https://github.com/liufei100514/my-codex-skills.git $work }
 else { & $git -C $work pull --ff-only }
 
-# 用 Obsidian 的内容覆盖 GitHub 的 skills/
-robocopy "F:\Codex专用知识库\50-Codex协作\Skills" "$work\skills" /MIR /XD miaoda-rd-data-lifecycle miaoda-rd-platform-delivery /NFL /NDL /NJH /NJS
+# 只精确覆盖要同步的技能（下面是示例清单，按需增删）
+$sync = @('lark-apaas-app-builder', 'kingdee-k3cloud-readonly')
+foreach ($s in $sync) {
+  $dst = Join-Path $work "skills\$s"
+  if (Test-Path $dst) { Remove-Item $dst -Recurse -Force }
+  Copy-Item "F:\Codex专用知识库\50-Codex协作\Skills\$s" $dst -Recurse -Force
+}
+
+# 新增 clone 后要配身份，否则 commit 报 Author identity unknown
+& $git -C $work config user.name  'liufei100514'
+& $git -C $work config user.email 'liufei100514@users.noreply.github.com'
 
 & $git -C $work add -A
 & $git -C $work commit -m "sync: 从 Obsidian 同步技能"
 & $git -C $work push origin main
 ```
 
-> 注意：`miaoda-rd-*` 两个是项目专用技能，只在 Obsidian 用，不同步到 GitHub（避免与通用技能混在一起）。若要同步，去掉 `/XD` 参数即可。
+> ⚠️ **绝对不要用 `robocopy /MIR`**：`/MIR` 会把目标端"源里没有"的文件删掉。
+> 2026-11-15 有一次误用，把 GitHub 仓库里 5 个原有技能（a-share-*、production-daily-analysis、silicone-rubber-process-diagnosis、test-driven-development）全部标记为删除，靠 `git checkout -- .` 才恢复。
+> 同步只做"精确覆盖指定技能"，不做目录镜像。
+
+> 说明：`miaoda-rd-*` 两个项目专用技能只在 Obsidian 使用，不同步到 GitHub，所以上面的 `$sync` 清单里不要放它们。
 
 ## 七、冲突与回滚
 
