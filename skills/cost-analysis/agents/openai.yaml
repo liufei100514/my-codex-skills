@@ -1,0 +1,6 @@
+interface:
+  display_name: "成本分析"
+  short_description: "经营数据成本与利润分析：口径勾稽→结构拆解→部门动作"
+  default_prompt: "Use $cost-analysis to analyze these financial tables and produce a cost/margin analysis with department-level actions."
+policy:
+  allow_implicit_invocation: true
