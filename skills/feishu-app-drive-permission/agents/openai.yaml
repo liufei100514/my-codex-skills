@@ -1,0 +1,3 @@
+﻿interface:
+  display_name: "Feishu App Drive Permission"
+  short_description: "Troubleshoot why a Feishu app can read one cloud file but gets 403 on another"
