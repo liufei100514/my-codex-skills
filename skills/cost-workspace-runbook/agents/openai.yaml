@@ -1,0 +1,3 @@
+﻿interface:
+  display_name: "Cost Workspace Runbook"
+  short_description: "成本核算台的总入口：全景、故障速查、日常运维、技能索引"
