@@ -1,0 +1,3 @@
+interface:
+  display_name: "ERP Material Quantity & Price"
+  short_description: "EDP 口径：金蝶取原料库存/在途，自建价格库取含税单价（只读）"
