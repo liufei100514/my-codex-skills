@@ -78,3 +78,7 @@ python F:\git-mirrors\Awesome-REA\scripts\catalog.py --list-categories
 
 目录里没有的常用工具可提 PR：改 `data/tool-resources.json` → 补 `site/translations.zh-CN.json` → `python3 scripts/build_readme.py` + `build_repository_index.py` + `validate.py` → 提 issue/PR。
 实测缺口（2026-11-23，只出现在自动扫描索引、未策展）：`unidbg`、`BlackDex`、`FART`、`youpk`、`jshook`、`v_jstools`。
+
+**已备好的 PR 包**：`50-Codex协作/开源贡献/Awesome-REA/`（`records.json` 两条记录、`translations-add.json` 中文、`apply.py` 幂等写入、`validate-local.py` 规则自查、`PR.md` 正文与提交顺序）。
+
+**Windows 限制**：它的 `build_readme.py` / `validate.py` 依赖 `os.O_NOFOLLOW`（POSIX），本机跑不起来；生成 README 与跑 validator 必须在 Linux/CI 侧做，**不要手改生成块**。
