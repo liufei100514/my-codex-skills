@@ -108,3 +108,24 @@ Get-ChildItem 'F:\git-mirrors','F:\tmp' -ErrorAction SilentlyContinue | Select-O
 2. **`__pycache__` / `.pytest_cache`** 跟着脚本走；脚本在 F 盘（或 junction 指向 F 盘）时就落在 F 盘，不用额外处理。
 3. **系统计划任务**是注册表项，不是文件，不受本约束。
 4. 若将来要连配置目录一起搬（如 `CODEX_HOME` 指到 F:），先确认该工具支持环境变量覆盖，失败就回滚——**不要为省几 MB 把工具搞坏**。
+
+## 七、执行记录（本机现状）
+
+| 日期 | 动作 | 结果 |
+|---|---|---|
+| 2026-11-22 | `$env:TEMP\my-codex-skills` → `F:\git-mirrors\my-codex-skills` | 迁完照常 push |
+| 2026-11-23 | `~/.codex/skills` + `~/.workbuddy/skills` 的 **54 个实体副本**迁入 Obsidian `Skills/` 并回填 junction | 搬出 C 盘 **24.05 MB**；备份 `F:\tmp\skills-migrate-backup-20261123-101003`；日志 `F:\tmp\skills-migrate-20261123-101003.log` |
+
+迁移脚本与审计脚本（可复用）：`F:\tmp\migrate-skills.ps1`、`F:\tmp\inv-skills.ps1`、`F:\tmp\diff-collisions.ps1`。
+
+**同名冲突的处理规则（重要）**：两边都有同名技能时，不能盲删。本次遇到 4 例：
+- 只有 `SKILL.md` 有差异、Obsidian 版本更大 → 保留 Obsidian；
+- 一边是"薄壳"、一边带 `references/` 与 `_skillhub_meta.json` → **把富版本合并进 Obsidian**（本次 `a-share-daily-review`：C 盘薄壳 2.4KB vs WorkBuddy 20KB+7 个 references，已按富版本合并）；
+- 只差 `__pycache__/*.pyc` → 忽略，不合并。
+
+## 八、已知遗留
+
+| 项 | 现状 | 建议 |
+|---|---|---|
+| `~/.codex/skills/.system` | Codex 系统自带目录，实体在 C 盘 | 不动（升级会被重写） |
+| `F:\2号机器人\Dsh\.dsh\skills\cangjie-skill` | F 盘上的重复实体（85 文件 vs Obsidian 63 文件，内容不同） | 在 F 盘，不影响 C 盘约束；要统一需人工确认留哪版 |
