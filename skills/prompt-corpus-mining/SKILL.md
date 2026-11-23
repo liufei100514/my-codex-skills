@@ -43,13 +43,14 @@ whenToUse: 要给 DSH / Codex / WorkBuddy 写新的子智能体角色稿或 pers
 ## 四、拉取：稀疏检出，只拿 A 档
 
 ```powershell
-$git = 'C:\Users\46485\tools\mingit\cmd\git.exe'   # 或 E:\workbuddy\resources\vendor\PortableGit\cmd\git.exe
-$dir = "$env:TEMP\prompt-corpus"
+$git = 'C:\Users\46485\tools\mingit\cmd\git.exe'   # git 本身只能是已装路径；语料一律落在 F:
+$dir = 'F:\git-mirrors\prompt-corpus'              # 不要用 $env:TEMP（在 C 盘）
 if (-not (Test-Path $dir)) { & $git clone --depth 1 --filter=blob:none --sparse https://github.com/asgeirtj/system_prompts_leaks $dir }
 & $git -C $dir sparse-checkout set Anthropic/official Anthropic/tools Anthropic/claude-code/agents OpenAI/Codex
 ```
 
 > `--depth 1 --filter=blob:none --sparse` 只下载选定目录的文件内容，26MB → 通常几 MB。
+> **落地位置铁律：语料、克隆、临时产物一律放 F:，不落 C 盘。**
 
 ## 五、抽取：只拿这几个东西
 
@@ -94,11 +95,11 @@ This is a READ-ONLY planning task. You are STRICTLY PROHIBITED from:
 
 ```powershell
 # 有 rg 时（GitHub 镜像/DSH grep 工具同理）
-rg -n "whenToUse|disallowedTools|model: inherit" "$dir\Anthropic\claude-code\agents"
-rg -n "READ-ONLY|STRICTLY PROHIBITED|Do NOT use" "$dir\Anthropic"
+rg -n "whenToUse|disallowedTools|model: inherit" "F:\git-mirrors\prompt-corpus\Anthropic\claude-code\agents"
+rg -n "READ-ONLY|STRICTLY PROHIBITED|Do NOT use" "F:\git-mirrors\prompt-corpus\Anthropic"
 
 # 只有 PowerShell 时
-$dir = "$env:TEMP\prompt-corpus"
+$dir = 'F:\git-mirrors\prompt-corpus'
 Select-String -Path "$dir\Anthropic\claude-code\agents\*.md" -Pattern 'whenToUse|disallowedTools' | Select-Object -First 20
 ```
 
